@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -N Next_Utt_Gen_Llama_7
+#PBS -l select=1:ncpus=12:mem=40G:ngpus=2
+#PBS -l walltime=02:00:00
+#PBS -j oe
+#PBS -o next_utt_gen_llama_7.txt
+#PBS -P 13003821
+#PBS -q normal
+
+module load ~/modulefiles/anaconda3/23.11.0
+source activate dev
+
+cd pretraining_phd/DialPrefixLM
+
+python evaluate_next_utt_gen.py post_train_models/llama_7_dial_fcm_full_full_merged post_train_models/llama_7_clm_full_full_2400_merged --nb_test_examples 10

@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -N Perplexity_Dial_FCM_Phi
+#PBS -l select=1:ncpus=12:mem=40G:ngpus=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+#PBS -o perplexity_dial_fcm_phi.txt
+#PBS -P 13003821
+#PBS -q normal
+
+module load ~/modulefiles/anaconda3/23.11.0
+source activate dev
+
+cd pretraining_phd/DialPrefixLM
+
+python evaluate_perplexity.py post_train_models/phi_2_dial_fcm_merged ccdv/mediasum --nb_test_examples 2000
+
+#llama_7_dial_fcm_balanced_noise_merged
+#llama_7_dial_fcm_full_full_merged

@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -N Summarization_Base_Phi_2
+#PBS -l select=1:ncpus=12:mem=40G:ngpus=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+#PBS -o summarization_base_phi_2.txt
+#PBS -P 13003821
+#PBS -q normal
+
+module load ~/modulefiles/anaconda3/23.11.0
+source activate dev
+#source activate dev_old
+
+cd pretraining_phd/DialPrefixLM
+
+python evaluate_summarization.py microsoft/phi-2 #--nb_test_examples 10
+
+#Summarization_Dial_FCM
+#Summarization_CLM
+# llama_7_clm_full_full_2400_merged
+# llama_7_dial_fcm_full_full_merged

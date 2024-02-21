@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -N Dial_FCM_Phi_plain_clm
+#PBS -l select=1:ncpus=12:mem=40G:ngpus=3
+#PBS -l walltime=25:00:00
+#PBS -j oe
+#PBS -o dial_fcm_phi_plain_clm_out.txt
+#PBS -P 13003821
+#PBS -q normal
+
+module load ~/modulefiles/anaconda3/23.11.0
+source activate dev
+
+cd pretraining_phd/DialPrefixLM
+
+deepspeed --num_gpus 3 --master_port 29801 pretrain.py \
+    microsoft/phi-2 phi_2_dial_fcm_plain_clm ccdv/mediasum \
+    --fcm --dial_ds --balanced_mixture \
+    --deepspeed ds_config_stage_2.json > jobs/dial_fcm_phi_2_plain_clm.txt

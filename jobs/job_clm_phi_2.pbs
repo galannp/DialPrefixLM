@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -N CLM_Phi_Re
+#PBS -l select=1:ncpus=12:mem=40G:ngpus=2
+#PBS -l walltime=24:00:00
+#PBS -j oe
+#PBS -o clm_phi_re_out.txt
+#PBS -P 13003821
+#PBS -q normal
+
+module load ~/modulefiles/anaconda3/23.11.0
+source activate dev
+
+cd pretraining_phd/DialPrefixLM
+
+deepspeed --num_gpus 2 --master_port 29887 pretrain.py \
+    microsoft/phi-2 phi_2_clm_re ccdv/mediasum \
+    --dial_ds --balanced_mixture \
+    --deepspeed ds_config_stage_2.json > jobs/clm_phi_2_re_stream.txt

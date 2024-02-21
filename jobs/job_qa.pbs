@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -N QA_Dial_FCM_Phi_2
+#PBS -l select=1:ncpus=12:mem=40G:ngpus=1
+#PBS -l walltime=00:30:00
+#PBS -j oe
+#PBS -o mutual_dial_fcm_phi_2.txt
+#PBS -P 13003821
+#PBS -q normal
+
+module load ~/modulefiles/anaconda3/23.11.0
+source activate dev
+#source activate dev_old
+
+cd pretraining_phd/DialPrefixLM
+
+python evaluate_qa.py post_train_models/phi_2_dial_fcm_merged EleutherAI/mutual --nb_test_examples 3000
+
+#llama_7_dial_fcm_full_full_merged
+#llama_7_clm_full_full_2400_merged
+#qa_clm.txt
+#qa.txt
